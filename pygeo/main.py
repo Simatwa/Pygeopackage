@@ -16,7 +16,7 @@ import argparse
 from . import __version__
 
 logging.basicConfig(
-    format="%(datetime)s - %(levelname)s : %(message)s ",datefmt="%H:%D:%Y",
+    format="%(asctime)s - %(levelname)s : %(message)s ",datefmt="%H:%M:%S",
     level=logging.INFO
 )
 
@@ -26,7 +26,7 @@ def error_handler():
             try:
                 logging.debug("Program started")
                 resp = func(*args,**kwargs)
-                logging.debug("Program done")
+                logging.debug("Program stopped")
             except Exception as e:
                 logging.error(e.args[0] if len(e.args)>1 else str(e))
             else:
@@ -45,8 +45,9 @@ class pygeo:
 
     @error_handler()   
     def create_dirs(self):
-        if not path.isdir(self.args.output_dir):
-            makedirs(self.args.output_dir)
+        dirname = path.dirname(self.args.output_path)
+        if not path.isdir(dirname):
+            makedirs(dirname)
 
     @error_handler()
     def main(self):
@@ -69,6 +70,7 @@ class pygeo:
         with rio.open(output, 'w', **output_meta) as m:
             m.write(mosaic)
 
+
 def main():
     parser = argparse.ArgumentParser(
         description="Mosaic rasterfile"
@@ -76,9 +78,9 @@ def main():
     parser.add_argument("-v","--version",action="version",version=f"v{__version__}")
     parser.add_argument("--input-dir",help="Path to directory containing raster files",
     required=True)
-    parser.add_argument("--output",dest="output_dir",help="Path to save the output",required=True)
+    parser.add_argument("--output",dest="output_path",help="Path to save the output",required=True)
     resp = parser.parse_args()
-    if not resp.output_dir.endswith(".tif"):
-        resp.output_dir = resp.output_dir+".tif"
+    if not resp.output_path.endswith(".tif"):
+        resp.output_path = resp.output_path+".tif"
     run = pygeo(resp)
     run.main()
