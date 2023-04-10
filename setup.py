@@ -1,10 +1,12 @@
 from setuptools import setup
-from pygeo import __maintainer__,__email__,__repo__
+from pygeo import __maintainer__,__email__,__repo__,__version__
 
 setup(
     name="pygeogis",
+    packages=["pygeo"],
     maintainer=__maintainer__,
     maintainer_email=__email__,
+    version=__version__,
     url=__repo__,
     author=__maintainer__,
     install_requires=[
