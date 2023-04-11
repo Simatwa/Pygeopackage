@@ -1,5 +1,5 @@
 from setuptools import setup
-from pygeo import __maintainer__,__email__,__repo__,__version__
+from pygeo import __maintainer__, __email__, __repo__, __version__
 
 setup(
     name="pygeogis",
@@ -14,12 +14,12 @@ setup(
     ],
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    entry_points = {
-        "console_scripts":[
+    entry_points={
+        "console_scripts": [
             ("pygeogis = pygeo.main:main"),
         ],
     },
-    classifiers = [
+    classifiers=[
         "License :: MIT License",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3.11",
